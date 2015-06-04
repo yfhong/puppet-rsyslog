@@ -5,9 +5,13 @@
 #
 class rsyslog::service {
 
-  service { $::rsyslog::service_name:
-    ensure     => running,
-    enable     => true,
+  service { 'rsyslog':
+    name       => $::rsyslog::service_name,
+    ensure     => $::rsyslog::service_ensure,
+    enable     => $::rsyslog::service_ensure ? {
+      'running' => true,
+      'stopped' => false,
+    },
     hasstatus  => true,
     hasrestart => true,
   }

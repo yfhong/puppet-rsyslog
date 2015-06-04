@@ -4,14 +4,23 @@
 # It sets variables according to platform.
 #
 class rsyslog::params {
-  case $::osfamily {
-    'Debian': {
-      $package_name = 'rsyslog'
-      $service_name = 'rsyslog'
-    }
-    'RedHat', 'Amazon': {
-      $package_name = 'rsyslog'
-      $service_name = 'rsyslog'
+  $package_name = 'rsyslog'
+  $package_ensure = 'present'
+
+  $service_name = 'rsyslog'
+  $service_ensure = 'running'
+
+  $use_tcp = false
+  $use_udp = true
+  $listen_address = '127.0.0.1'
+
+  $conffile = '/etc/rsyslog.conf'
+  $logdir = '/srv/logs'
+
+  case $::operatingsystem {
+    'Debian', 'Ubuntu',
+    'RedHat', 'CentOS',
+    'Amazon': {
     }
     default: {
       fail("${::operatingsystem} not supported")
