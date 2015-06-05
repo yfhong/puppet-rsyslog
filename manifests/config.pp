@@ -25,4 +25,13 @@ class rsyslog::config {
     mode    => '0640',
     content => template('rsyslog/rsyslog.conf.erb'),
   }
+
+  $local_rules.each |$entry| {
+    file { "${logdir}/${entry['app']}":
+      ensure => 'directory',
+      owner  => 'root',
+      group  => $::rsyslog::params::root_group,
+      mode   => '0755',
+    }
+  }
 }
