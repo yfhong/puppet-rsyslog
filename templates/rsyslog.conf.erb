@@ -66,3 +66,9 @@ uucp,news.crit                                          /var/log/spooler
 
 # Save boot messages also to boot.log
 local7.*                                                /var/log/boot.log
+
+<%- if local_rules -%>
+<%- local_rules.each do |entry| -%>
+<%= "#{entry['facility']}.#{entry['level']}  #{logdir}/#{entry['app']}/#{entry['logname']}.log" %>
+<%- end -%>
+<%- end -%>

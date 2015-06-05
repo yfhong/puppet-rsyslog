@@ -8,6 +8,9 @@ class rsyslog::config {
   $tcp_enabled = $::rsyslog::use_tcp
   $listen_address = $::rsyslog::listen_address
 
+  $logdir = $::rsyslog::logdir
+  $local_rules = hiera_array('rsyslog::local_rules')
+
   file { $::rsyslog::logdir:
     ensure => 'directory',
     owner  => 'root',
